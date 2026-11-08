@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "roleplay_materials"
+    }
+  ],
+  "pattern": [
+    "PSP",
+    "PPP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "item": "roleplay_materials:plank"
+    },
+    "S": {
+      "item": "roleplay_materials:scrap"
+    }
+  },
+  "result": {
+    "item": "cold_weapons:wood_shield"
+  }
+}

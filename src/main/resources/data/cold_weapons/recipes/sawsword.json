@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "roleplay_materials"
+    }
+  ],
+  "pattern": [
+    " B ",
+    "PMT",
+    " S "
+  ],
+  "key": {
+    "B": {
+      "item": "roleplay_materials:saw_sword_part"
+    },
+    "P": {
+      "item": "roleplay_materials:forged_iron_plate"
+    },
+    "M": {
+      "item": "roleplay_materials:motor"
+    },
+    "T": {
+      "item": "roleplay_materials:tape"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "cold_weapons:sawsword"
+  }
+}

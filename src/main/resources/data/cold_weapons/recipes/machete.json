@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "roleplay_materials"
+    }
+  ],
+  "pattern": [
+    "M",
+    "T",
+    "S"
+  ],
+  "key": {
+    "M": {
+      "item": "roleplay_materials:machete_part"
+    },
+    "T": {
+      "item": "roleplay_materials:tape"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "cold_weapons:machete"
+  }
+}

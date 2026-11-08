@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "cold_weapons:stone_spear",
+    "cold_weapons:spear_knife",
+    "cold_weapons:steel_spear"
+  ]
+}

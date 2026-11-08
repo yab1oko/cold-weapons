@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "roleplay_materials"
+    }
+  ],
+  "pattern": [
+    " C ",
+    "PMT",
+    " S "
+  ],
+  "key": {
+    "C": {
+      "item": "roleplay_materials:circular_saw"
+    },
+    "P": {
+      "item": "roleplay_materials:forged_iron_plate"
+    },
+    "M": {
+      "item": "roleplay_materials:motor"
+    },
+    "T": {
+      "item": "roleplay_materials:tape"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "cold_weapons:mech_saw"
+  }
+}

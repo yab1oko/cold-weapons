@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "roleplay_materials"
+    }
+  ],
+  "pattern": [
+    "  P",
+    " ST",
+    "S  "
+  ],
+  "key": {
+    "T": {
+      "item": "roleplay_materials:tape"
+    },
+    "P": {
+      "item": "roleplay_materials:spear_steel_head"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "cold_weapons:steel_spear"
+  }
+}

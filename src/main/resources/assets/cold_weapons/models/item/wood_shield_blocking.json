@@ -1,0 +1,23 @@
+{
+	"parent": "cold_weapons:item/wood_shield",
+	"display": {
+		"thirdperson_righthand": {
+			"rotation": [45, 135, 0],
+			"translation": [0, 1.5, 0]
+		},
+		"thirdperson_lefthand": {
+			"rotation": [45, 135, 0],
+			"translation": [0, 1.5, 0]
+		},
+		"firstperson_righthand": {
+			"rotation": [0, 180, -5],
+			"translation": [4, -4, -2],
+			"scale": [1, 1, 1]
+		},
+		"firstperson_lefthand": {
+			"rotation": [0, 180, -5],
+			"translation": [4, -4, -2],
+			"scale": [1, 1, 1]
+		}
+	}
+}

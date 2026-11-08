@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "roleplay_materials"
+    }
+  ],
+  "pattern": [
+    "  K",
+    " ST",
+    "S  "
+  ],
+  "key": {
+    "K": {
+      "item": "cold_weapons:knife"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "T": {
+      "item": "roleplay_materials:tape"
+    }
+  },
+  "result": {
+    "item": "cold_weapons:spear_knife"
+  }
+}

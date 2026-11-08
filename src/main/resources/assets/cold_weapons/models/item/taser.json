@@ -1,0 +1,136 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "cold_weapons:item/taser",
+		"particle": "cold_weapons:item/taser"
+	},
+	"elements": [
+		{
+			"from": [6.9, 5, 7],
+			"to": [9.1, 5.5, 8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 5, 6]},
+			"faces": {
+				"north": {"uv": [11, 0, 13, 0.5], "texture": "#0"},
+				"east": {"uv": [4, 11, 5, 11.5], "texture": "#0"},
+				"south": {"uv": [1, 11, 3, 11.5], "texture": "#0"},
+				"west": {"uv": [5, 11, 6, 11.5], "texture": "#0"},
+				"up": {"uv": [1, 10, 3, 11], "texture": "#0"},
+				"down": {"uv": [10, 3, 12, 4], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6.9, 7.5, 7],
+			"to": [9.1, 8, 8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 5, 7]},
+			"faces": {
+				"north": {"uv": [11, 1, 13, 1.5], "texture": "#0"},
+				"east": {"uv": [6, 11, 7, 11.5], "texture": "#0"},
+				"south": {"uv": [11, 2, 13, 2.5], "texture": "#0"},
+				"west": {"uv": [7, 11, 8, 11.5], "texture": "#0"},
+				"up": {"uv": [10, 4, 12, 5], "texture": "#0"},
+				"down": {"uv": [10, 5, 12, 6], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6.9, 5, 3],
+			"to": [9.1, 8, 7],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 5, 6]},
+			"faces": {
+				"north": {"uv": [8, 0, 10, 3], "texture": "#0"},
+				"east": {"uv": [0, 0, 4, 3], "texture": "#0"},
+				"south": {"uv": [8, 3, 10, 6], "texture": "#0"},
+				"west": {"uv": [0, 3, 4, 6], "texture": "#0"},
+				"up": {"uv": [4, 0, 6, 4], "texture": "#0"},
+				"down": {"uv": [4, 4, 6, 8], "texture": "#0"}
+			}
+		},
+		{
+			"from": [6.9, 5, 8],
+			"to": [9.1, 8, 9],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 5, 6]},
+			"faces": {
+				"north": {"uv": [4, 8, 6, 11], "texture": "#0"},
+				"east": {"uv": [0, 10, 1, 13], "texture": "#0"},
+				"south": {"uv": [6, 8, 8, 11], "texture": "#0"},
+				"west": {"uv": [10, 0, 11, 3], "texture": "#0"},
+				"up": {"uv": [10, 6, 12, 7], "texture": "#0"},
+				"down": {"uv": [10, 7, 12, 8], "texture": "#0"}
+			}
+		},
+		{
+			"from": [7, 3, 8.8],
+			"to": [9, 7, 10.8],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 5, 9.8]},
+			"faces": {
+				"north": {"uv": [0, 6, 2, 10], "texture": "#0"},
+				"east": {"uv": [6, 0, 8, 4], "texture": "#0"},
+				"south": {"uv": [2, 6, 4, 10], "texture": "#0"},
+				"west": {"uv": [6, 4, 8, 8], "texture": "#0"},
+				"up": {"uv": [8, 6, 10, 8], "texture": "#0"},
+				"down": {"uv": [8, 8, 10, 10], "texture": "#0"}
+			}
+		},
+		{
+			"from": [7, 6.9, 9.39],
+			"to": [9, 8, 10.39],
+			"rotation": {"angle": -22.5, "axis": "x", "origin": [8, 6, 9.39]},
+			"faces": {
+				"north": {"uv": [8, 10, 10, 11], "texture": "#0"},
+				"east": {"uv": [3, 10, 4, 11], "texture": "#0"},
+				"south": {"uv": [10, 8, 12, 9], "texture": "#0"},
+				"west": {"uv": [3, 11, 4, 12], "texture": "#0"},
+				"up": {"uv": [10, 9, 12, 10], "texture": "#0"},
+				"down": {"uv": [10, 10, 12, 11], "texture": "#0"}
+			}
+		},
+		{
+			"from": [7.75, 8, 3.5],
+			"to": [8.25, 8.2, 4],
+			"rotation": {"angle": 0, "axis": "y", "origin": [6.75, 8, 3]},
+			"faces": {
+				"north": {"uv": [15, 15.8, 15.5, 16], "texture": "#0"},
+				"east": {"uv": [15.5, 15.8, 16, 16], "texture": "#0"},
+				"south": {"uv": [15.5, 15.8, 16, 16], "texture": "#0"},
+				"west": {"uv": [15, 15.8, 15.5, 16], "texture": "#0"},
+				"up": {"uv": [15.5, 14.5, 16, 15], "texture": "#0"},
+				"down": {"uv": [15.5, 15, 16, 15.5], "texture": "#0"}
+			}
+		},
+		{
+			"from": [7.5, 5.5, 7.7],
+			"to": [8.5, 7.5, 8],
+			"rotation": {"angle": 0, "axis": "y", "origin": [7, 5.5, 6]},
+			"faces": {
+				"north": {"uv": [12.5, 14, 13.5, 16], "texture": "#0"},
+				"east": {"uv": [10, 14, 10.3, 16], "texture": "#0"},
+				"south": {"uv": [8.5, 14, 9.5, 16], "texture": "#0"},
+				"west": {"uv": [11.7, 14, 12, 16], "texture": "#0"},
+				"up": {"uv": [10.5, 15.7, 11.5, 16], "texture": "#0"},
+				"down": {"uv": [10.5, 14, 11.5, 14.3], "texture": "#0"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [0, 3, -0.75]
+		},
+		"thirdperson_lefthand": {
+			"translation": [0, 3, -0.75]
+		},
+		"firstperson_righthand": {
+			"translation": [0, 4, 0]
+		},
+		"firstperson_lefthand": {
+			"translation": [0, 4, 0]
+		},
+		"ground": {
+			"rotation": [0, 0, 90],
+			"translation": [0, -2.5, 0]
+		},
+		"gui": {
+			"rotation": [90, -60, 90],
+			"translation": [-2.5, 2, 0],
+			"scale": [1.40234, 1.40234, 1.40234]
+		}
+	}
+}

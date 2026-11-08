@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "roleplay_materials"
+    }
+  ],
+  "pattern": [
+    "  M",
+    " ST",
+    "S  "
+  ],
+  "key": {
+    "M": {
+      "item": "roleplay_materials:mace_part"
+    },
+    "T": {
+      "item": "roleplay_materials:tape"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "cold_weapons:steel_mace"
+  }
+}

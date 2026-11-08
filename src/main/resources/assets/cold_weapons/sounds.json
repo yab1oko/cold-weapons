@@ -1,0 +1,26 @@
+{
+  "circular_start": {
+    "subtitle": "subtitles.cold_weapons.circular_start",
+    "sounds": ["cold_weapons:circular_start"]
+  },
+  "circular_idle": {
+    "subtitle": "subtitles.cold_weapons.circular_idle",
+    "sounds": ["cold_weapons:circular_idle"]
+  },
+  "circular_end": {
+    "subtitle": "subtitles.cold_weapons.circular_end",
+    "sounds": ["cold_weapons:circular_end"]
+  },
+  "sawsword_start": {
+    "subtitle": "subtitles.cold_weapons.sawsword_start",
+    "sounds": ["cold_weapons:sawsword_start"]
+  },
+  "sawsword_idle": {
+    "subtitle": "subtitles.cold_weapons.sawsword_idle",
+    "sounds": ["cold_weapons:sawsword_idle"]
+  },
+  "taser": {
+    "subtitle": "subtitles.cold_weapons.taser",
+    "sounds": ["cold_weapons:taser"]
+  }
+}
