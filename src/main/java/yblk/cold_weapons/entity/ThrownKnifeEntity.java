@@ -122,6 +122,9 @@ public class ThrownKnifeEntity extends AbstractArrow {
             int damage = stack.getDamageValue() + amount;
             if (damage >= stack.getMaxDamage()) {
                 this.playSound(SoundEvents.ITEM_BREAK, 0.8F, 0.8F + this.random.nextFloat() * 0.4F);
+                if (yblk.cold_weapons.item.MaterialHits.isBottle(stack)) {
+                    yblk.cold_weapons.item.MaterialHits.shatter(this.level(), this.getX(), this.getY(), this.getZ());
+                }
                 this.knifeItem = ItemStack.EMPTY;
                 this.entityData.set(DATA_KNIFE, ItemStack.EMPTY);
                 return false;
