@@ -70,6 +70,14 @@ versionRange = "[1.7,)"
 ordering = "NONE"
 side = "BOTH"
 
+# Soft dependency: item info pages. The mod loads without it.
+[[dependencies."${mod_id}"]]
+modId = "jei"
+mandatory = false
+versionRange = "[15.75.0,)"
+ordering = "NONE"
+side = "CLIENT"
+
 # Soft dependency: crafting recipes that use Roleplay Materials (e.g. nailed bat).
 [[dependencies."${mod_id}"]]
 modId = "roleplay_materials"
