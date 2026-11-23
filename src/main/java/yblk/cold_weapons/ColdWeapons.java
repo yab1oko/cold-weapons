@@ -7,6 +7,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.slf4j.Logger;
 import yblk.cold_weapons.config.ColdWeaponsConfig;
+import yblk.cold_weapons.loot.ModLootModifiers;
 import yblk.cold_weapons.registry.ModCreativeTabs;
 import yblk.cold_weapons.registry.ModEffects;
 import yblk.cold_weapons.registry.ModEntities;
@@ -25,6 +26,7 @@ public class ColdWeapons {
         ModEffects.EFFECTS.register(modBus);
         ModEntities.ENTITY_TYPES.register(modBus);
         ModCreativeTabs.CREATIVE_MODE_TABS.register(modBus);
+        ModLootModifiers.SERIALIZERS.register(modBus);
         ModLoadingContext.get().registerConfig(net.minecraftforge.fml.config.ModConfig.Type.COMMON, ColdWeaponsConfig.SPEC);
     }
 }

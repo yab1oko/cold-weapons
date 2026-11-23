@@ -24,6 +24,10 @@ public final class ColdWeaponsConfig {
     private static final ForgeConfigSpec.DoubleValue CHARGE_MAX;
     private static final ForgeConfigSpec.DoubleValue CHARGE_DRAIN;
     private static final ForgeConfigSpec.DoubleValue BATTERY_RESTORE;
+    private static final ForgeConfigSpec.BooleanValue ZOMBIE_DROPS;
+    private static final ForgeConfigSpec.DoubleValue ZOMBIE_CHANCE;
+    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> ZOMBIE_ITEMS;
+    private static final ForgeConfigSpec.ConfigValue<List<? extends String>> ZOMBIE_ENTITIES;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
@@ -82,6 +86,34 @@ public final class ColdWeaponsConfig {
                 "Сколько заряда даёт одна батарея Roleplay Materials. Тазер получает столько же прочности."
         );
         BATTERY_RESTORE = builder.defineInRange("batteryRestore", 100.0D, 1.0D, 100000.0D);
+        builder.pop();
+
+        builder.push("zombieDrops");
+        builder.comment(
+                "Rare scavenged-weapon drops from zombies. Off until a pack turns it on. Not chest loot.",
+                "Редкий дроп хлама с зомби. Выключено, пока это не включат. Не лут сундуков."
+        );
+        ZOMBIE_DROPS = builder.define("enabled", false);
+        builder.comment("Chance on a player kill, after the entity matches the list.", "Шанс при убийстве игроком, если тип моба в списке.");
+        ZOMBIE_CHANCE = builder.defineInRange("chance", 0.02D, 0.0D, 1.0D);
+        builder.comment("Item ids that may drop. Junk only.", "Id предметов. Только хлам.");
+        ZOMBIE_ITEMS = builder.defineListAllowEmpty("items", List.of(
+                "cold_weapons:rusty_pipe",
+                "cold_weapons:bottle",
+                "cold_weapons:knife",
+                "cold_weapons:crowbar",
+                "cold_weapons:bat",
+                "cold_weapons:screwdriver",
+                "cold_weapons:rolling_pin",
+                "cold_weapons:pan"
+        ), ColdWeaponsConfig::isItemId);
+        builder.comment("Entity type ids that can drop the list.", "Типы существ, с которых может выпасть список.");
+        ZOMBIE_ENTITIES = builder.defineListAllowEmpty("entities", List.of(
+                "minecraft:zombie",
+                "minecraft:zombie_villager",
+                "minecraft:husk",
+                "minecraft:drowned"
+        ), ColdWeaponsConfig::isItemId);
         builder.pop();
 
         SPEC = builder.build();
@@ -144,6 +176,22 @@ public final class ColdWeaponsConfig {
 
     public static double batteryRestore() {
         return loaded(BATTERY_RESTORE, 100.0D);
+    }
+
+    public static boolean zombieDropsEnabled() {
+        return SPEC.isLoaded() && ZOMBIE_DROPS.get();
+    }
+
+    public static double zombieDropChance() {
+        return loaded(ZOMBIE_CHANCE, 0.02D);
+    }
+
+    public static List<? extends String> zombieDropItems() {
+        return SPEC.isLoaded() ? ZOMBIE_ITEMS.get() : List.of();
+    }
+
+    public static List<? extends String> zombieDropEntities() {
+        return SPEC.isLoaded() ? ZOMBIE_ENTITIES.get() : List.of();
     }
 
     public static boolean isExtraThrowable(ItemStack stack) {
