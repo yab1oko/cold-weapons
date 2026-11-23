@@ -7,7 +7,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -39,16 +38,6 @@ public final class TaserClient {
 
     @SubscribeEvent
     public static void livingPost(RenderLivingEvent.Post<?, ?> event) {
-        unshake(event.getPoseStack(), event.getEntity());
-    }
-
-    @SubscribeEvent
-    public static void playerPre(RenderPlayerEvent.Pre event) {
-        shake(event.getPoseStack(), event.getEntity(), event.getPartialTick());
-    }
-
-    @SubscribeEvent
-    public static void playerPost(RenderPlayerEvent.Post event) {
         unshake(event.getPoseStack(), event.getEntity());
     }
 

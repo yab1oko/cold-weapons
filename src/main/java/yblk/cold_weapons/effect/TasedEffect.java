@@ -25,7 +25,7 @@ public class TasedEffect extends MobEffect {
 
     @Override
     public boolean isDurationEffectTick(int duration, int amplifier) {
-        return true;
+        return duration % 4 == 0;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class TasedEffect extends MobEffect {
         double y = entity.getY() + entity.getBbHeight() * 0.55D;
         double z = entity.getZ();
         var random = entity.getRandom();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
             double ox = (random.nextDouble() - 0.5D) * entity.getBbWidth();
             double oy = (random.nextDouble() - 0.5D) * entity.getBbHeight() * 0.8D;
             double oz = (random.nextDouble() - 0.5D) * entity.getBbWidth();
@@ -51,7 +51,7 @@ public class TasedEffect extends MobEffect {
         }
         server.sendParticles(new net.minecraft.core.particles.DustParticleOptions(
                         new org.joml.Vector3f(0.55F, 0.85F, 1.0F), 0.7F),
-                x, y, z, 2, 0.2D, 0.3D, 0.2D, 0.0D);
+                x, y, z, 1, 0.15D, 0.2D, 0.15D, 0.0D);
     }
 
     @Override

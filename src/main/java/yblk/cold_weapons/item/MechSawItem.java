@@ -19,7 +19,10 @@ import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import yblk.cold_weapons.config.ColdWeaponsConfig;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
@@ -94,7 +97,13 @@ public class MechSawItem extends ChargedToolItem {
 
         Vec3 look = player.getLookAngle();
         Vec3 eye = player.getEyePosition();
-        Vec3 tip = eye.add(look.scale(REACH));
+        Vec3 reachEnd = eye.add(look.scale(REACH));
+        BlockHitResult blockHit = level.clip(new ClipContext(eye, reachEnd, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
+        double reach = REACH;
+        if (blockHit.getType() != HitResult.Type.MISS) {
+            reach = Math.min(REACH, eye.distanceTo(blockHit.getLocation()));
+        }
+        Vec3 tip = eye.add(look.scale(reach));
         AABB box = new AABB(eye, tip).inflate(HALF_WIDTH);
 
         boolean hit = false;
@@ -102,6 +111,9 @@ public class MechSawItem extends ChargedToolItem {
                 && living.isAlive()
                 && !living.isSpectator()
                 && player.canAttack(living))) {
+            if (blocked(level, player, eye, (LivingEntity) entity)) {
+                continue;
+            }
             LivingEntity living = (LivingEntity) entity;
             living.invulnerableTime = 0;
             // Keep almost all pre-hit velocity so spin DPS does not shove mobs away.
@@ -120,6 +132,12 @@ public class MechSawItem extends ChargedToolItem {
         if (hit && player.tickCount % 4 == 0) {
             stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(player.getUsedItemHand()));
         }
+    }
+
+    private static boolean blocked(Level level, Player player, Vec3 eye, LivingEntity target) {
+        Vec3 point = target.getEyePosition();
+        BlockHitResult hit = level.clip(new ClipContext(eye, point, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, player));
+        return hit.getType() != HitResult.Type.MISS && eye.distanceToSqr(hit.getLocation()) + 0.05D < eye.distanceToSqr(point);
     }
 
     @Override

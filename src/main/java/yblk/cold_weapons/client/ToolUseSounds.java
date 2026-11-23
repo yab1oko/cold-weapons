@@ -106,7 +106,7 @@ public final class ToolUseSounds {
                 idle = null;
             }
             if (mode == Mode.CIRCULAR) {
-                end = play(player, ModSounds.CIRCULAR_END.get(), 2.0F);
+                end = play(player, ModSounds.CIRCULAR_END.get(), 0.55F);
             } else {
                 cut(end);
                 end = null;
@@ -123,8 +123,8 @@ public final class ToolUseSounds {
             SoundEvent idleEvent = next == Mode.CIRCULAR
                     ? ModSounds.CIRCULAR_IDLE.get()
                     : ModSounds.SAWSWORD_IDLE.get();
-            float startVolume = next == Mode.CIRCULAR ? 2.4F : 1.0F;
-            float idleVolume = next == Mode.CIRCULAR ? 0.35F : 1.0F;
+            float startVolume = next == Mode.CIRCULAR ? 0.6F : 0.7F;
+            float idleVolume = next == Mode.CIRCULAR ? 0.35F : 0.55F;
             start = play(player, startEvent, startVolume);
             idle = new LoopSound(player, idleEvent, idleVolume);
             Minecraft.getInstance().getSoundManager().play(idle);
@@ -144,7 +144,6 @@ public final class ToolUseSounds {
         }
 
         private static SoundInstance play(Player player, SoundEvent event, float volume) {
-            boolean local = player == Minecraft.getInstance().player;
             SoundInstance instance = new SimpleSoundInstance(
                     event.getLocation(),
                     SoundSource.PLAYERS,
@@ -153,11 +152,11 @@ public final class ToolUseSounds {
                     RandomSource.create(),
                     false,
                     0,
-                    SoundInstance.Attenuation.NONE,
-                    local ? 0.0D : player.getX(),
-                    local ? 0.0D : player.getY(),
-                    local ? 0.0D : player.getZ(),
-                    local);
+                    SoundInstance.Attenuation.LINEAR,
+                    player.getX(),
+                    player.getY(),
+                    player.getZ(),
+                    false);
             Minecraft.getInstance().getSoundManager().play(instance);
             return instance;
         }
@@ -179,10 +178,11 @@ public final class ToolUseSounds {
             this.delay = 0;
             this.volume = volume;
             this.pitch = 1.0F;
-            this.relative = player == Minecraft.getInstance().player;
-            this.x = this.relative ? 0.0D : player.getX();
-            this.y = this.relative ? 0.0D : player.getY();
-            this.z = this.relative ? 0.0D : player.getZ();
+            this.relative = false;
+            this.attenuation = SoundInstance.Attenuation.LINEAR;
+            this.x = player.getX();
+            this.y = player.getY();
+            this.z = player.getZ();
         }
 
         void halt() {
@@ -195,11 +195,9 @@ public final class ToolUseSounds {
                 stop();
                 return;
             }
-            if (!this.relative) {
-                this.x = player.getX();
-                this.y = player.getY();
-                this.z = player.getZ();
-            }
+            this.x = player.getX();
+            this.y = player.getY();
+            this.z = player.getZ();
         }
     }
 }

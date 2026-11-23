@@ -32,10 +32,10 @@ public final class ThrowWeapons {
             if (!player.getAbilities().instabuild) {
                 stack.shrink(1);
             }
+            player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
+                    SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 0.8F, 1.1F);
+            player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
         }
-        player.level().playSound(null, player.getX(), player.getY(), player.getZ(),
-                SoundEvents.TRIDENT_THROW, SoundSource.PLAYERS, 0.8F, 1.1F);
-        player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
     }
 
     public static float damageOf(ItemStack stack) {

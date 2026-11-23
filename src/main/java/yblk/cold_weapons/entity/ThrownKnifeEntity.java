@@ -17,7 +17,6 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 import yblk.cold_weapons.registry.ModEntities;
-import yblk.cold_weapons.registry.ModItems;
 
 public class ThrownKnifeEntity extends AbstractArrow {
     private static final EntityDataAccessor<ItemStack> DATA_KNIFE =
@@ -53,7 +52,10 @@ public class ThrownKnifeEntity extends AbstractArrow {
 
     public ItemStack getKnifeItem() {
         ItemStack synced = this.entityData.get(DATA_KNIFE);
-        return synced.isEmpty() ? new ItemStack(ModItems.KNIFE.get()) : synced;
+        if (!synced.isEmpty()) {
+            return synced;
+        }
+        return this.knifeItem.isEmpty() ? ItemStack.EMPTY : this.knifeItem;
     }
 
     public boolean isInGround() {
@@ -91,7 +93,10 @@ public class ThrownKnifeEntity extends AbstractArrow {
             this.playSound(SoundEvents.TRIDENT_HIT, 1.0F, 1.0F);
             if (!this.level().isClientSide) {
                 if (this.applyDurabilityLoss(10)) {
-                    this.spawnAtLocation(this.getPickupItem());
+                    ItemStack pickup = this.getPickupItem();
+                    if (!pickup.isEmpty()) {
+                        this.spawnAtLocation(pickup);
+                    }
                 }
                 this.discard();
             }
@@ -140,7 +145,10 @@ public class ThrownKnifeEntity extends AbstractArrow {
         }
         if (this.tickCount > 1200 && !this.level().isClientSide && !this.inGround) {
             if (this.applyDurabilityLoss(1)) {
-                this.spawnAtLocation(this.getPickupItem());
+                ItemStack pickup = this.getPickupItem();
+                if (!pickup.isEmpty()) {
+                    this.spawnAtLocation(pickup);
+                }
             }
             this.discard();
         }

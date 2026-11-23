@@ -7,6 +7,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -88,7 +90,7 @@ public class TaserDartEntity extends ThrowableProjectile {
                 return;
             }
             Entity owner = this.getOwner();
-            if (!this.level().isClientSide && owner != null && owner.distanceTo(living) > TaserItem.range() + 1.5D) {
+            if (!this.level().isClientSide && !linkHolds(owner, living)) {
                 this.discard();
                 return;
             }
@@ -134,6 +136,32 @@ public class TaserDartEntity extends ThrowableProjectile {
         this.noPhysics = true;
         this.entityData.set(STUCK_ID, -2);
         this.blockStuckTicks = 1;
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        if (!this.level().isClientSide && this.isStuckToEntity()) {
+            Entity stuck = this.level().getEntity(this.getStuckId());
+            if (stuck instanceof LivingEntity living) {
+                living.removeEffect(ModEffects.TASED.get());
+            }
+        }
+        super.remove(reason);
+    }
+
+    /** The wire stays only while the shooter is in range and still holding this taser. */
+    private boolean linkHolds(Entity owner, LivingEntity target) {
+        if (owner == null) {
+            return false;
+        }
+        if (owner.distanceTo(target) > TaserItem.range() + 1.5D) {
+            return false;
+        }
+        if (owner instanceof Player player) {
+            ItemStack held = this.isMainHand() ? player.getMainHandItem() : player.getOffhandItem();
+            return held.getItem() instanceof TaserItem;
+        }
+        return true;
     }
 
     private void stickTo(LivingEntity living, Vec3 worldHit) {
