@@ -8,27 +8,142 @@ import yblk.cold_weapons.item.ThrowableKnifeItem;
 
 import java.util.List;
 
-/** Common config: extra items that throw like the kitchen knife. */
+/** Common config. Values are read when used, so a reload applies without restarting the items. */
 public final class ColdWeaponsConfig {
     public static final ForgeConfigSpec SPEC;
     private static final ForgeConfigSpec.ConfigValue<List<? extends String>> THROWABLE_WEAPONS;
+    private static final ForgeConfigSpec.DoubleValue HEADSHOT_MULTIPLIER;
+    private static final ForgeConfigSpec.DoubleValue TASER_RANGE;
+    private static final ForgeConfigSpec.IntValue TASER_STUN_SECONDS;
+    private static final ForgeConfigSpec.IntValue TASER_COOLDOWN_SECONDS;
+    private static final ForgeConfigSpec.IntValue TASER_DURABILITY;
+    private static final ForgeConfigSpec.DoubleValue SAW_SPIN_DAMAGE;
+    private static final ForgeConfigSpec.IntValue SAW_SPIN_INTERVAL;
+    private static final ForgeConfigSpec.DoubleValue SAWSWORD_IDLE_DAMAGE;
+    private static final ForgeConfigSpec.DoubleValue SAWSWORD_POWERED_DAMAGE;
+    private static final ForgeConfigSpec.DoubleValue CHARGE_MAX;
+    private static final ForgeConfigSpec.DoubleValue CHARGE_DRAIN;
+    private static final ForgeConfigSpec.DoubleValue BATTERY_RESTORE;
 
     static {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
         builder.comment(
-                "Оружия, которые кидаются как кухонный нож.",
-                "Зажми Shift и ПКМ, подержи и отпусти — предмет полетит.",
-                "Пиши полный id, например minecraft:iron_sword или another_mod:dagger.",
-                "Ножи этого мода уже кидаются сами, их сюда писать не нужно."
+                "Weapons that throw like the kitchen knife.",
+                "Hold Shift and right-click, then release to throw.",
+                "Write a full id, for example minecraft:iron_sword or another_mod:dagger.",
+                "Knives from this mod already throw. Do not list them.",
+                "Оружия, которые кидаются как кухонный нож. Ножи этого мода сюда писать не нужно."
         );
         THROWABLE_WEAPONS = builder.defineListAllowEmpty(
                 "throwableWeapons",
                 List.of(),
                 ColdWeaponsConfig::isItemId);
+
+        builder.push("thrown");
+        builder.comment(
+                "Damage multiplier when a thrown weapon hits the head.",
+                "Множитель урона при попадании в голову."
+        );
+        HEADSHOT_MULTIPLIER = builder.defineInRange("headshotMultiplier", 2.0D, 1.0D, 20.0D);
+        builder.pop();
+
+        builder.push("taser");
+        builder.comment("How far the dart and wires stay connected, in blocks.", "Дальность дротика и проводов, в блоках.");
+        TASER_RANGE = builder.defineInRange("range", 8.0D, 1.0D, 64.0D);
+        builder.comment("How long a hit stuns the target, in seconds.", "Длительность оглушения, в секундах.");
+        TASER_STUN_SECONDS = builder.defineInRange("stunSeconds", 5, 1, 60);
+        builder.comment("Reload time after a shot, in seconds.", "Перезарядка после выстрела, в секундах.");
+        TASER_COOLDOWN_SECONDS = builder.defineInRange("cooldownSeconds", 18, 1, 120);
+        builder.comment("Durability. One shot spends one point.", "Прочность. Один выстрел тратит одно деление.");
+        TASER_DURABILITY = builder.defineInRange("maxDurability", 100, 1, 10000);
+        builder.pop();
+
+        builder.push("circularSaw");
+        builder.comment("Damage dealt on each spin tick that lands.", "Урон за каждый тик вращения, который попал.");
+        SAW_SPIN_DAMAGE = builder.defineInRange("spinDamage", 0.5D, 0.0D, 40.0D);
+        builder.comment("Ticks between spin hits. 1 hits every tick, which is the default.", "Тики между попаданиями. 1 — каждый тик.");
+        SAW_SPIN_INTERVAL = builder.defineInRange("spinIntervalTicks", 1, 1, 40);
+        builder.pop();
+
+        builder.push("chainsawSword");
+        builder.comment("Damage with the blade off.", "Урон с выключенным полотном.");
+        SAWSWORD_IDLE_DAMAGE = builder.defineInRange("idleDamage", 4.0D, 0.0D, 40.0D);
+        builder.comment("Damage while the blade is running.", "Урон с включённым полотном.");
+        SAWSWORD_POWERED_DAMAGE = builder.defineInRange("poweredDamage", 8.0D, 0.0D, 40.0D);
+        builder.pop();
+
+        builder.push("charge");
+        builder.comment("Charge pool on the circular saw and chainsaw sword.", "Запас заряда циркулярки и бензомеча.");
+        CHARGE_MAX = builder.defineInRange("max", 150.0D, 1.0D, 100000.0D);
+        builder.comment("Charge spent each second the tool is running.", "Заряд в секунду, пока инструмент работает.");
+        CHARGE_DRAIN = builder.defineInRange("drainPerSecond", 1.5D, 0.0D, 1000.0D);
+        builder.comment(
+                "Charge restored by one Roleplay Materials battery. The taser uses the same amount as durability.",
+                "Сколько заряда даёт одна батарея Roleplay Materials. Тазер получает столько же прочности."
+        );
+        BATTERY_RESTORE = builder.defineInRange("batteryRestore", 100.0D, 1.0D, 100000.0D);
+        builder.pop();
+
         SPEC = builder.build();
     }
 
     private ColdWeaponsConfig() {
+    }
+
+    public static double headshotMultiplier() {
+        return loaded(HEADSHOT_MULTIPLIER, 2.0D);
+    }
+
+    public static double taserRange() {
+        return loaded(TASER_RANGE, 8.0D);
+    }
+
+    public static int taserStunTicks() {
+        return loaded(TASER_STUN_SECONDS, 5) * 20;
+    }
+
+    public static int taserStunSeconds() {
+        return loaded(TASER_STUN_SECONDS, 5);
+    }
+
+    public static int taserCooldownTicks() {
+        return loaded(TASER_COOLDOWN_SECONDS, 18) * 20;
+    }
+
+    public static int taserCooldownSeconds() {
+        return loaded(TASER_COOLDOWN_SECONDS, 18);
+    }
+
+    public static int taserDurability() {
+        return loaded(TASER_DURABILITY, 100);
+    }
+
+    public static float sawSpinDamage() {
+        return (float) loaded(SAW_SPIN_DAMAGE, 0.5D);
+    }
+
+    public static int sawSpinInterval() {
+        return loaded(SAW_SPIN_INTERVAL, 1);
+    }
+
+    public static float sawswordIdleDamage() {
+        return (float) loaded(SAWSWORD_IDLE_DAMAGE, 4.0D);
+    }
+
+    public static float sawswordPoweredDamage() {
+        return (float) loaded(SAWSWORD_POWERED_DAMAGE, 8.0D);
+    }
+
+    public static double chargeMax() {
+        return loaded(CHARGE_MAX, 150.0D);
+    }
+
+    public static double chargeDrainPerSecond() {
+        return loaded(CHARGE_DRAIN, 1.5D);
+    }
+
+    public static double batteryRestore() {
+        return loaded(BATTERY_RESTORE, 100.0D);
     }
 
     public static boolean isExtraThrowable(ItemStack stack) {
@@ -53,6 +168,14 @@ public final class ColdWeaponsConfig {
             }
         }
         return false;
+    }
+
+    private static double loaded(ForgeConfigSpec.DoubleValue value, double fallback) {
+        return SPEC.isLoaded() ? value.get() : fallback;
+    }
+
+    private static int loaded(ForgeConfigSpec.IntValue value, int fallback) {
+        return SPEC.isLoaded() ? value.get() : fallback;
     }
 
     private static boolean isItemId(Object value) {

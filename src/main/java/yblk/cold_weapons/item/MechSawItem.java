@@ -1,6 +1,8 @@
 package yblk.cold_weapons.item;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -12,17 +14,20 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+import yblk.cold_weapons.config.ColdWeaponsConfig;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 /** Circular saw: hold right-click to spin the blade, animate it, and spend charge. */
 public class MechSawItem extends ChargedToolItem {
-    private static final float SPIN_DAMAGE = 0.5F;
     private static final double REACH = 2.6D;
     private static final double HALF_WIDTH = 0.7D;
 
@@ -73,7 +78,7 @@ public class MechSawItem extends ChargedToolItem {
         }
         int used = getUseDuration(stack) - remainingUseDuration;
         if (used > 0 && used % 20 == 0) {
-            boolean hasCharge = ToolCharge.drain(stack, ToolCharge.PER_SECOND);
+            boolean hasCharge = ToolCharge.drain(stack, ColdWeaponsConfig.chargeDrainPerSecond());
             if (player instanceof ServerPlayer serverPlayer) {
                 serverPlayer.inventoryMenu.broadcastChanges();
             }
@@ -81,6 +86,10 @@ public class MechSawItem extends ChargedToolItem {
                 player.stopUsingItem();
                 return;
             }
+        }
+
+        if (used % ColdWeaponsConfig.sawSpinInterval() != 0) {
+            return;
         }
 
         Vec3 look = player.getLookAngle();
@@ -97,7 +106,7 @@ public class MechSawItem extends ChargedToolItem {
             living.invulnerableTime = 0;
             // Keep almost all pre-hit velocity so spin DPS does not shove mobs away.
             Vec3 motion = living.getDeltaMovement();
-            if (living.hurt(level.damageSources().playerAttack(player), SPIN_DAMAGE)) {
+            if (living.hurt(level.damageSources().playerAttack(player), ColdWeaponsConfig.sawSpinDamage())) {
                 living.setDeltaMovement(
                         motion.x * 0.85D + living.getDeltaMovement().x * 0.15D,
                         motion.y,
@@ -111,6 +120,12 @@ public class MechSawItem extends ChargedToolItem {
         if (hit && player.tickCount % 4 == 0) {
             stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(player.getUsedItemHand()));
         }
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tip, flag);
+        tip.add(Component.translatable("item.cold_weapons.saw.use").withStyle(ChatFormatting.GRAY));
     }
 
     private static void spawnHitEffects(ServerLevel level, LivingEntity target) {

@@ -52,11 +52,12 @@ public class ChargedToolItem extends ModMeleeItem {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tip, TooltipFlag flag) {
         double charge = ToolCharge.get(stack);
-        tip.add(Component.translatable("item.cold_weapons.charge", format(charge), format(ToolCharge.MAX)));
+        tip.add(Component.translatable("item.cold_weapons.charge", format(charge), format(yblk.cold_weapons.config.ColdWeaponsConfig.chargeMax()))
+                .withStyle(net.minecraft.ChatFormatting.GRAY));
         if (ToolCharge.isRunning(stack)) {
-            tip.add(Component.translatable("item.cold_weapons.powered"));
+            tip.add(Component.translatable("item.cold_weapons.powered").withStyle(net.minecraft.ChatFormatting.GRAY));
         }
-        tip.add(Component.translatable("item.cold_weapons.battery_hint"));
+        tip.add(Component.translatable("item.cold_weapons.battery_hint").withStyle(net.minecraft.ChatFormatting.GRAY));
     }
 
     /** Drain 1.5 while a toggled tool stays on. Hold-to-run tools drain from {@code onUseTick}. */
@@ -68,7 +69,7 @@ public class ChargedToolItem extends ModMeleeItem {
         if (entity.tickCount % 20 != 0) {
             return;
         }
-        if (!ToolCharge.drain(stack, ToolCharge.PER_SECOND)) {
+        if (!ToolCharge.drain(stack, yblk.cold_weapons.config.ColdWeaponsConfig.chargeDrainPerSecond())) {
             ToolCharge.setRunning(stack, false);
         }
         if (entity instanceof ServerPlayer player) {
@@ -113,7 +114,7 @@ public class ChargedToolItem extends ModMeleeItem {
                 SoundEvents.EXPERIENCE_ORB_PICKUP, SoundSource.PLAYERS, 0.5F, 1.2F);
     }
 
-    static String format(double value) {
+    public static String format(double value) {
         if (Math.abs(value - Math.rint(value)) < 0.05D) {
             return Integer.toString((int) Math.rint(value));
         }

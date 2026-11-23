@@ -88,7 +88,7 @@ public class TaserDartEntity extends ThrowableProjectile {
                 return;
             }
             Entity owner = this.getOwner();
-            if (!this.level().isClientSide && owner != null && owner.distanceTo(living) > TaserItem.RANGE + 1.5D) {
+            if (!this.level().isClientSide && owner != null && owner.distanceTo(living) > TaserItem.range() + 1.5D) {
                 this.discard();
                 return;
             }
@@ -119,7 +119,7 @@ public class TaserDartEntity extends ThrowableProjectile {
             return;
         }
         if (!this.level().isClientSide) {
-            living.addEffect(new MobEffectInstance(ModEffects.TASED.get(), TasedEffect.DURATION_TICKS, 0, false, false, true));
+            living.addEffect(new MobEffectInstance(ModEffects.TASED.get(), yblk.cold_weapons.config.ColdWeaponsConfig.taserStunTicks(), 0, false, false, true));
             stickTo(living, result.getLocation());
         }
     }

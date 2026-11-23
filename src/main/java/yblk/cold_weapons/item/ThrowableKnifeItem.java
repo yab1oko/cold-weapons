@@ -2,6 +2,8 @@ package yblk.cold_weapons.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -13,8 +15,13 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+import yblk.cold_weapons.config.ColdWeaponsConfig;
+
+import java.util.List;
 
 public class ThrowableKnifeItem extends SwordItem {
     private final float attackDamage;
@@ -37,6 +44,12 @@ public class ThrowableKnifeItem extends SwordItem {
 
     public float getThrowDamage() {
         return this.attackDamage;
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tip, TooltipFlag flag) {
+        tip.add(Component.translatable("item.cold_weapons.throw.hint", ChargedToolItem.format(ColdWeaponsConfig.headshotMultiplier()))
+                .withStyle(ChatFormatting.GRAY));
     }
 
     @Override

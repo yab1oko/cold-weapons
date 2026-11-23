@@ -11,8 +11,6 @@ import net.minecraft.world.item.ItemStack;
  * Five-second taser stun. Movement is cut to a crawl; attacks and item use are blocked by events.
  */
 public class TasedEffect extends MobEffect {
-    public static final int DURATION_TICKS = 5 * 20;
-
     public TasedEffect() {
         super(MobEffectCategory.HARMFUL, 0xFFE14A);
         addAttributeModifier(Attributes.MOVEMENT_SPEED, "6f0a1c2e-7b34-4d11-9a20-c1e5a5700001",

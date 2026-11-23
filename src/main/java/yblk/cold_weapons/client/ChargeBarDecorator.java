@@ -29,7 +29,7 @@ public final class ChargeBarDecorator {
     }
 
     private static boolean render(GuiGraphics graphics, Font font, ItemStack stack, int x, int y) {
-        int filled = Math.round((float) (ToolCharge.get(stack) / ToolCharge.MAX * 13.0D));
+        int filled = Math.round((float) (ToolCharge.get(stack) / yblk.cold_weapons.config.ColdWeaponsConfig.chargeMax() * 13.0D));
         if (ToolCharge.get(stack) > 0.0D) {
             filled = Math.max(1, Math.min(13, filled));
         }

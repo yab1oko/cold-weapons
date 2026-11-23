@@ -1,5 +1,6 @@
 package yblk.cold_weapons.item;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
@@ -17,22 +18,27 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import yblk.cold_weapons.config.ColdWeaponsConfig;
 import yblk.cold_weapons.entity.TaserDartEntity;
 import yblk.cold_weapons.registry.ModSounds;
 
 import java.util.List;
 
-/** Right-click fires two threads. A hit stuns for 5 seconds, then the taser recharges for 18. */
+/** Right-click fires one dart. The renderer draws two wires. A hit stuns, then the taser reloads. */
 public class TaserItem extends Item {
-    public static final int MAX_DURABILITY = 100;
-    /** One RPM battery refills the whole cell, same step Fashion uses for NVG. */
-    public static final int BATTERY_RESTORE = 100;
-    public static final int COOLDOWN_TICKS = 18 * 20;
-    public static final double RANGE = 8.0D;
     private static final String TAG_READY = "TaserReady";
 
     public TaserItem(Properties properties) {
-        super(properties.durability(MAX_DURABILITY));
+        super(properties.durability(100));
+    }
+
+    @Override
+    public int getMaxDamage(ItemStack stack) {
+        return ColdWeaponsConfig.taserDurability();
+    }
+
+    public static double range() {
+        return ColdWeaponsConfig.taserRange();
     }
 
     public static boolean restore(ItemStack stack) {
@@ -40,7 +46,7 @@ public class TaserItem extends Item {
         if (damage <= 0) {
             return false;
         }
-        stack.setDamageValue(Math.max(0, damage - BATTERY_RESTORE));
+        stack.setDamageValue(Math.max(0, damage - (int) ColdWeaponsConfig.batteryRestore()));
         return true;
     }
 
@@ -54,7 +60,7 @@ public class TaserItem extends Item {
         if (gameTime >= until) {
             return 1.0F;
         }
-        return 1.0F - (until - gameTime) / (float) COOLDOWN_TICKS;
+        return 1.0F - (until - gameTime) / (float) ColdWeaponsConfig.taserCooldownTicks();
     }
 
     @Override
@@ -67,7 +73,7 @@ public class TaserItem extends Item {
             fire(server, player, hand);
             stack.setDamageValue(stack.getDamageValue() + 1);
         }
-        stack.getOrCreateTag().putLong(TAG_READY, level.getGameTime() + COOLDOWN_TICKS);
+        stack.getOrCreateTag().putLong(TAG_READY, level.getGameTime() + ColdWeaponsConfig.taserCooldownTicks());
         if (player instanceof ServerPlayer serverPlayer) {
             serverPlayer.inventoryMenu.broadcastChanges();
         }
@@ -88,8 +94,13 @@ public class TaserItem extends Item {
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tip, TooltipFlag flag) {
         int left = stack.getMaxDamage() - stack.getDamageValue();
-        tip.add(Component.translatable("item.cold_weapons.taser.durability", left, stack.getMaxDamage()));
-        tip.add(Component.translatable("item.cold_weapons.battery_hint"));
+        tip.add(Component.translatable("item.cold_weapons.taser.durability", left, stack.getMaxDamage())
+                .withStyle(ChatFormatting.GRAY));
+        tip.add(Component.translatable("item.cold_weapons.taser.use",
+                ColdWeaponsConfig.taserStunSeconds(),
+                ColdWeaponsConfig.taserCooldownSeconds(),
+                ChargedToolItem.format(ColdWeaponsConfig.taserRange())).withStyle(ChatFormatting.GRAY));
+        tip.add(Component.translatable("item.cold_weapons.battery_hint").withStyle(ChatFormatting.GRAY));
     }
 
     private static boolean isReady(ItemStack stack, Level level) {

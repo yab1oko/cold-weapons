@@ -3,14 +3,10 @@ package yblk.cold_weapons.item;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
+import yblk.cold_weapons.config.ColdWeaponsConfig;
 
 /** Separate energy pool for the circular saw and chainsaw sword. Not durability. */
 public final class ToolCharge {
-    public static final double MAX = 150.0D;
-    /** Drained while the tool is running. */
-    public static final double PER_SECOND = 1.5D;
-    /** Same step as Fashion NVG: one RPM battery restores 100. */
-    public static final double PER_BATTERY = 100.0D;
 
     private static final String CHARGE = "Charge";
     private static final String RUNNING = "Running";
@@ -21,13 +17,13 @@ public final class ToolCharge {
     public static double get(ItemStack stack) {
         CompoundTag tag = stack.getTag();
         if (tag == null || !tag.contains(CHARGE)) {
-            return MAX;
+            return ColdWeaponsConfig.chargeMax();
         }
-        return Mth.clamp(tag.getDouble(CHARGE), 0.0D, MAX);
+        return Mth.clamp(tag.getDouble(CHARGE), 0.0D, ColdWeaponsConfig.chargeMax());
     }
 
     public static void set(ItemStack stack, double value) {
-        stack.getOrCreateTag().putDouble(CHARGE, Mth.clamp(value, 0.0D, MAX));
+        stack.getOrCreateTag().putDouble(CHARGE, Mth.clamp(value, 0.0D, ColdWeaponsConfig.chargeMax()));
     }
 
     public static boolean isRunning(ItemStack stack) {
@@ -56,10 +52,10 @@ public final class ToolCharge {
     /** @return false when the tool is already full */
     public static boolean addBattery(ItemStack stack) {
         double current = get(stack);
-        if (current >= MAX - 0.001D) {
+        if (current >= ColdWeaponsConfig.chargeMax() - 0.001D) {
             return false;
         }
-        set(stack, Math.min(MAX, current + PER_BATTERY));
+        set(stack, Math.min(ColdWeaponsConfig.chargeMax(), current + ColdWeaponsConfig.batteryRestore()));
         return true;
     }
 }

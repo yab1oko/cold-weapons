@@ -8,8 +8,14 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
+import yblk.cold_weapons.config.ColdWeaponsConfig;
+
+import java.util.List;
 
 /** Chainsaw sword. RMB toggles the blade: full damage and the animated texture while charge lasts. */
 public class SawSwordItem extends ChargedToolItem {
@@ -44,7 +50,15 @@ public class SawSwordItem extends ChargedToolItem {
         if (slot != EquipmentSlot.MAINHAND) {
             return super.getDefaultAttributeModifiers(slot);
         }
-        float damage = ToolCharge.isRunning(stack) ? POWERED_DAMAGE : IDLE_DAMAGE;
+        float damage = ToolCharge.isRunning(stack)
+                ? ColdWeaponsConfig.sawswordPoweredDamage()
+                : ColdWeaponsConfig.sawswordIdleDamage();
         return modifiers(damage, ATTACK_SPEED);
+    }
+
+    @Override
+    public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tip, TooltipFlag flag) {
+        super.appendHoverText(stack, level, tip, flag);
+        tip.add(Component.translatable("item.cold_weapons.sawsword.use").withStyle(net.minecraft.ChatFormatting.GRAY));
     }
 }

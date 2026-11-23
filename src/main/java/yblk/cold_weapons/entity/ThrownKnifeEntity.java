@@ -81,7 +81,7 @@ public class ThrownKnifeEntity extends AbstractArrow {
             Vec3 hit = result.getLocation();
             double headThreshold = living.getY() + living.getBbHeight() * 0.85D;
             if (hit.y >= headThreshold) {
-                hitDamage *= 2.0F;
+                hitDamage *= (float) yblk.cold_weapons.config.ColdWeaponsConfig.headshotMultiplier();
             }
         }
 

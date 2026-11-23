@@ -64,7 +64,7 @@ public class TaserDartRenderer extends EntityRenderer<TaserDartEntity> {
         if (!(stuck instanceof LivingEntity living) || !living.isAlive()) {
             return false;
         }
-        return shooter.distanceTo(living) <= TaserItem.RANGE + 1.5D;
+        return shooter.distanceTo(living) <= TaserItem.range() + 1.5D;
     }
 
     private static Vec3 muzzle(LivingEntity entity, boolean mainHand, float partial) {

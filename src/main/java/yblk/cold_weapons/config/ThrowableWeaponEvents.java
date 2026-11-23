@@ -1,9 +1,13 @@
 package yblk.cold_weapons.config;
 
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import yblk.cold_weapons.item.ChargedToolItem;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -45,5 +49,14 @@ public final class ThrowableWeaponEvents {
         }
         int held = ThrowWeapons.USE_DURATION - event.getDuration();
         ThrowWeapons.throwStack(player, event.getItem(), held);
+    }
+
+    @SubscribeEvent
+    public static void onTooltip(ItemTooltipEvent event) {
+        if (!ColdWeaponsConfig.isExtraThrowable(event.getItemStack())) {
+            return;
+        }
+        event.getToolTip().add(Component.translatable("item.cold_weapons.throw.hint",
+                ChargedToolItem.format(ColdWeaponsConfig.headshotMultiplier())).withStyle(ChatFormatting.GRAY));
     }
 }
