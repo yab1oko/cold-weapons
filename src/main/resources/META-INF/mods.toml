@@ -74,7 +74,7 @@ side = "BOTH"
 [[dependencies."${mod_id}"]]
 modId = "jei"
 mandatory = false
-versionRange = "[15.75.0,)"
+versionRange = "[15.62.0,)"
 ordering = "NONE"
 side = "CLIENT"
 
