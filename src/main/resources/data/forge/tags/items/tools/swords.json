@@ -1,0 +1,31 @@
+{
+  "replace": false,
+  "values": [
+    "cold_weapons:hammer",
+    "cold_weapons:sledgehammer",
+    "cold_weapons:jigsaw",
+    "cold_weapons:screwdriver",
+    "cold_weapons:knife",
+    "cold_weapons:cleaver",
+    "cold_weapons:military_knife",
+    "cold_weapons:pan",
+    "cold_weapons:rolling_pin",
+    "cold_weapons:rake",
+    "cold_weapons:bat",
+    "cold_weapons:nailed_bat",
+    "cold_weapons:stone_axe",
+    "cold_weapons:stone_spear",
+    "cold_weapons:spear_knife",
+    "cold_weapons:rusty_pipe",
+    "cold_weapons:bottle",
+    "cold_weapons:wrench",
+    "cold_weapons:stop_sign",
+    "cold_weapons:crowbar",
+    "cold_weapons:knuckle",
+    "cold_weapons:machete",
+    "cold_weapons:steel_spear",
+    "cold_weapons:steel_mace",
+    "cold_weapons:sawsword",
+    "cold_weapons:mech_saw"
+  ]
+}

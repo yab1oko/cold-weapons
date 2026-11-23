@@ -112,7 +112,7 @@ public final class ModItems {
     public static final RegistryObject<Item> STOP_SIGN = ITEMS.register("stop_sign",
             () -> new ModMeleeItem(ModToolTiers.STOP_SIGN, 7.5F, 0.9F, new Item.Properties()));
 
-    /** Crowbar: 5.5 HP, attack speed 1.5, durability 256. Pickaxe tag only (no digging). */
+    /** Crowbar: 5.5 HP, attack speed 1.5, durability 256. Tagged as an axe for recognition, not a digger. */
     public static final RegistryObject<Item> CROWBAR = ITEMS.register("crowbar",
             () -> new ModMeleeItem(ModToolTiers.CROWBAR, 5.5F, 1.5F, new Item.Properties()));
 

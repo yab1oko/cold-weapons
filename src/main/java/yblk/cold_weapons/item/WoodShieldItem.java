@@ -1,5 +1,6 @@
 package yblk.cold_weapons.item;
 
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ShieldItem;
 import yblk.cold_weapons.compat.RoleplayItems;
@@ -14,6 +15,12 @@ public class WoodShieldItem extends ShieldItem {
 
     @Override
     public boolean isValidRepairItem(ItemStack stack, ItemStack repair) {
-        return RoleplayItems.isPlank(repair) || super.isValidRepairItem(stack, repair);
+        if (RoleplayItems.isPlank(repair)) {
+            return true;
+        }
+        if (!RoleplayItems.hasPlank() && repair.is(ItemTags.PLANKS)) {
+            return true;
+        }
+        return super.isValidRepairItem(stack, repair);
     }
 }

@@ -27,6 +27,10 @@ public final class RoleplayItems {
         return item != null && !stack.isEmpty() && stack.is(item);
     }
 
+    public static boolean hasPlank() {
+        return item(PLANK_ID) != null;
+    }
+
     @Nullable
     private static Item battery() {
         return item(BATTERY_ID);

@@ -72,6 +72,10 @@ public enum ModToolTiers implements Tier {
         return enchantmentValue;
     }
 
+    /**
+     * No shared repair item. Junk weapons stay unrepairable in the anvil.
+     * The wooden shield checks Roleplay Materials planks itself.
+     */
     @Override
     public Ingredient getRepairIngredient() {
         return Ingredient.EMPTY;
