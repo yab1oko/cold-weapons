@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.4
+
+- Combat numbers (headshots, taser, saws, charge) live in the config. Defaults match 1.3.
+- Tooltips explain throwing, charge tools, and the taser, in English and Russian.
+- The crowbar is no longer a pickaxe, so it does not mine. Melee weapons are tagged as swords.
+- The wooden shield still repairs with a Roleplay Materials plank. Without that mod, vanilla planks work. Other scavenged weapons stay non-repairable in the anvil.
+- Fixes: one throw sound, saw audio that fades with distance, the circular saw no longer hits through walls, a broken taser wire ends the stun, one model shake, fewer stun particles, a thrown item never turns into a kitchen knife.
+- Melee hits play a quiet wood, metal, or glass sound. A broken bottle shatters on its last hit.
+- Zombies can rarely drop junk weapons. This is off until the config is enabled.
+- Optional JEI info pages for every weapon, tool, taser, and the wooden shield.
+
+## 1.3
+
+- New mod icon.
+
 ## 1.2
 
 The new crafts, the spear head, and recharging use **Roleplay Materials**.
