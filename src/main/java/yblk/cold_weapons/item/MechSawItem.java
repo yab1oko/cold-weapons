@@ -40,13 +40,19 @@ public class MechSawItem extends ChargedToolItem {
 
     @Override
     public UseAnim getUseAnimation(ItemStack stack) {
-        // Not SPEAR — that is the trident wind-up. Pose is handled on the client.
-        return UseAnim.BLOCK;
+        // The idle hold stays a normal item. BLOCK would swap the arm to a shield while spinning.
+        return UseAnim.NONE;
     }
 
     @Override
     public int getUseDuration(ItemStack stack) {
         return 72000;
+    }
+
+    /** Charge and durability change while the blade is spinning. That is not a new item. */
+    @Override
+    public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+        return slotChanged || oldStack.getItem() != newStack.getItem();
     }
 
     @Override

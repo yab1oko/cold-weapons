@@ -37,4 +37,5 @@ public final class ClientSetup {
         event.registerEntityRenderer(ModEntities.THROWN_KNIFE.get(), ThrownKnifeRenderer::new);
         event.registerEntityRenderer(ModEntities.TASER_DART.get(), TaserDartRenderer::new);
     }
+
 }

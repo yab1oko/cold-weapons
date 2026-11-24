@@ -14,6 +14,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 import yblk.cold_weapons.effect.TasedEffect;
 import yblk.cold_weapons.item.TaserItem;
 import yblk.cold_weapons.registry.ModEffects;
@@ -83,10 +85,18 @@ public class TaserDartEntity extends ThrowableProjectile {
     public void tick() {
         if (this.isStuckToEntity()) {
             Entity stuck = this.level().getEntity(this.entityData.get(STUCK_ID));
-            if (!(stuck instanceof LivingEntity living) || !living.isAlive() || !TasedEffect.isTased(living)) {
+            if (!(stuck instanceof LivingEntity living) || !living.isAlive()) {
                 if (!this.level().isClientSide) {
                     this.discard();
                 }
+                return;
+            }
+            if (this.level().isClientSide) {
+                int stuckId = living.getId();
+                DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
+                        yblk.cold_weapons.client.TasedChargeLayer.markStuck(stuckId));
+            } else if (!TasedEffect.isTased(living)) {
+                this.discard();
                 return;
             }
             Entity owner = this.getOwner();
@@ -140,6 +150,11 @@ public class TaserDartEntity extends ThrowableProjectile {
 
     @Override
     public void remove(RemovalReason reason) {
+        if (this.level().isClientSide && this.isStuckToEntity()) {
+            int stuckId = this.getStuckId();
+            DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () ->
+                    yblk.cold_weapons.client.TasedChargeLayer.clearStuck(stuckId));
+        }
         if (!this.level().isClientSide && this.isStuckToEntity()) {
             Entity stuck = this.level().getEntity(this.getStuckId());
             if (stuck instanceof LivingEntity living) {

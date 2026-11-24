@@ -3,6 +3,7 @@ package yblk.cold_weapons.client;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraftforge.api.distmarker.Dist;
@@ -13,10 +14,31 @@ import net.minecraftforge.fml.common.Mod;
 import yblk.cold_weapons.ColdWeapons;
 import yblk.cold_weapons.effect.TasedEffect;
 
+import java.util.Collections;
+import java.util.Set;
+import java.util.WeakHashMap;
+
 /** Light camera shake for a tased local player, and a small jitter on the victim's model. */
 @Mod.EventBusSubscriber(modid = ColdWeapons.MODID, value = Dist.CLIENT)
 public final class TaserClient {
+    /** Renderers that already received the charge layer. The live renderer can differ from the one registered at startup. */
+    private static final Set<LivingEntityRenderer<?, ?>> PATCHED =
+            Collections.newSetFromMap(new WeakHashMap<>());
+
     private TaserClient() {
+    }
+
+    @SubscribeEvent
+    public static void attachCharge(RenderLivingEvent.Pre<?, ?> event) {
+        LivingEntityRenderer<?, ?> renderer = event.getRenderer();
+        if (renderer != null && PATCHED.add(renderer)) {
+            addLayer(renderer);
+        }
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    private static void addLayer(LivingEntityRenderer renderer) {
+        renderer.addLayer(new TasedChargeLayer(renderer));
     }
 
     @SubscribeEvent

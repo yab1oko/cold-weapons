@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -33,7 +34,7 @@ public final class MaterialHits {
         if (!(event.getSource().getEntity() instanceof Player player)) {
             return;
         }
-        if (event.getSource().getDirectEntity() != player) {
+        if (event.getSource().getDirectEntity() instanceof Projectile) {
             return;
         }
         ItemStack stack = player.getMainHandItem();
@@ -45,9 +46,9 @@ public final class MaterialHits {
             return;
         }
         LivingEntity target = event.getEntity();
-        float pitch = 0.9F + target.getRandom().nextFloat() * 0.2F;
+        float pitch = 0.85F + target.getRandom().nextFloat() * 0.15F;
         target.level().playSound(null, target.getX(), target.getY(), target.getZ(),
-                sound, SoundSource.PLAYERS, 0.4F, pitch);
+                sound, SoundSource.PLAYERS, 1.0F, pitch);
     }
 
     @SubscribeEvent
@@ -72,21 +73,22 @@ public final class MaterialHits {
     }
 
     private static net.minecraft.sounds.SoundEvent impact(Item item) {
+        var id = ForgeRegistries.ITEMS.getKey(item);
+        String path = id == null ? "" : id.getPath();
+        boolean ours = id != null && ColdWeapons.MODID.equals(id.getNamespace());
         if (item == ModItems.BAT.get()
                 || item == ModItems.NAILED_BAT.get()
                 || item == ModItems.ROLLING_PIN.get()
                 || item == ModItems.KNUCKLE.get()
-                || item == ModItems.STOP_SIGN.get()) {
+                || item == ModItems.STOP_SIGN.get()
+                || (ours && (path.contains("rolling_pin") || path.contains("bat")
+                || path.contains("knuckle") || path.contains("stop_sign")))) {
             return SoundEvents.WOOD_HIT;
         }
-        if (item == ModItems.BOTTLE.get()) {
+        if (item == ModItems.BOTTLE.get() || (ours && path.contains("bottle"))) {
             return SoundEvents.GLASS_HIT;
         }
-        var id = ForgeRegistries.ITEMS.getKey(item);
-        if (id == null || !ColdWeapons.MODID.equals(id.getNamespace())) {
-            return null;
-        }
-        if (item instanceof TaserItem || item instanceof WoodShieldItem) {
+        if (!ours || item instanceof TaserItem || item instanceof WoodShieldItem) {
             return null;
         }
         return SoundEvents.METAL_HIT;

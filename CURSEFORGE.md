@@ -29,7 +29,7 @@ Most weapons are **found**: placed in the world, or handed out by map loot. A fe
 <img src="https://media.forgecdn.net/attachments/description/null/description_b0bc8a9b-b147-4a30-b5a7-762a5626c5a2.gif" alt="Throwing a knife" width="300">
 </p>
 
-- **Circular saw:** hold right-click to spin. Spinning spends a charge pool (150 by default, 1.5 per second). A Roleplay Materials battery restores 100.
+- **Circular saw:** hold right-click to spin. You hold it in front with both hands, and the blade faces forward. Spinning spends a charge pool (150 by default, 1.5 per second). A Roleplay Materials battery restores 100.
 - **Chainsaw sword:** right-click toggles the blade. Idle damage is 4, running damage is 8. Running spends the same charge pool. Recharge with a battery in the inventory or the off-hand.
 - **Taser:** right-click fires one dart. Two wires run back to the taser. A hit stuns (5 seconds by default). Walk out of range and the stun ends. A yellow bar is the reload (18 seconds). A battery restores durability.
 - **Wooden shield:** blocks like a vanilla shield. Repair it in an anvil with a Roleplay Materials plank.

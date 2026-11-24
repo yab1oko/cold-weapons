@@ -19,20 +19,30 @@ The roster mixes light, fast weapons with slow, heavy hitters, plus a few tools 
 <img src="https://media.forgecdn.net/attachments/description/null/description_1d104e33-499b-43e0-b41f-984a84985e5b.gif" alt="Cold Weapons demo" width="242">
 </p>
 
-Kitchen knife, cleaver, and military knife can be thrown with right-click; headshots deal bonus damage.
+Kitchen knife, cleaver, and military knife throw when you sneak, hold right-click, and release. A longer hold throws harder. Headshots deal bonus damage.
 
 <p align="center">
 <img src="https://media.forgecdn.net/attachments/description/null/description_b0bc8a9b-b147-4a30-b5a7-762a5626c5a2.gif" alt="Throwable knives" width="300">
 </p>
 
+### Circular saw
+Hold right-click to spin. You hold it in front with both hands, and the blade faces forward. Spinning spends a charge pool (150 by default, 1.5 per second). A Roleplay Materials battery restores 100.
+
+### Chainsaw sword
+Right-click toggles the blade. Idle damage is 4, running damage is 8. Running spends the same charge pool. Recharge with a battery in the inventory or the off-hand.
+
+### Taser
+Right-click fires one dart. Two wires run back to the taser. A hit stuns for 5 seconds by default. Walk out of range and the stun ends. A yellow bar is the reload, 18 seconds. A battery restores durability.
+
+### Wooden shield
+Blocks like a vanilla shield. Repair it in an anvil with a Roleplay Materials plank. Without Roleplay Materials, vanilla planks work.
+
 Blunt options include hammers, bats, a pan, rolling pin, knuckles, and a stop sign. Sharp and stabbing gear covers knives, a cleaver, screwdriver, broken bottle, and crowbar. Reach and heavy hitters include a rake, sledgehammer, axe, and wrench. Scrap tools cover a rusty pipe, hand saw, pickaxe, and shovel.
 
-If [Better Combat](https://www.curseforge.com/minecraft/mc-mods/better-combat-by-daedelus) is installed, weapons pick up attack animations and movesets. [Roleplay Materials](https://www.curseforge.com/minecraft/mc-mods/roleplay-materials) can optionally supply materials for crafts and drops.
-
-Cold Weapons stays focused on melee feel. It does not add guns or a full progression tree — only the weapons you would find or craft from scrap after the world ends.
+If [Better Combat](https://www.curseforge.com/minecraft/mc-mods/better-combat) is installed, weapons pick up attack animations and movesets. [Roleplay Materials](https://www.curseforge.com/minecraft/mc-mods/roleplay-materials) supplies materials for the crafted weapons. Optional JEI adds an info page for every weapon. Zombie junk drops exist in the config and stay off until you enable them.
 
 ## 🎮 How to use
-Craft or find the weapons and use them like any other melee weapon. Hold a throwable knife and right-click to throw.
+Craft or find the weapons and use them like any other melee weapon. Knives from this mod already throw, so they do not need to be listed under `throwableWeapons`.
 
 <p align="center">
 <a href="https://discord.gg/tXMBWwSuRp"><img src="https://media.forgecdn.net/attachments/description/1724512/description_d6ea1e33-5f50-48cf-bd13-42e59dbece97.png" alt="Join Discord" width="502"></a>
@@ -43,6 +53,7 @@ Craft or find the weapons and use them like any other melee weapon. Hold a throw
 - [YBLK Fashion](https://www.curseforge.com/minecraft/mc-mods/yblk-fashion)
 - [YBLK Features](https://www.curseforge.com/minecraft/mc-mods/yblk-features)
 - [Roleplay Materials](https://www.curseforge.com/minecraft/mc-mods/roleplay-materials)
+- [YBLK Zones](https://www.curseforge.com/minecraft/mc-mods/yblk-zones)
 
 ## Feedback
 Bugs, balance notes, and ideas: join the Discord — [yab1oko mods](https://discord.gg/tXMBWwSuRp).
